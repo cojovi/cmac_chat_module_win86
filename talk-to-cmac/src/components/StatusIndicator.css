@@ -1,0 +1,116 @@
+/**
+ * Status Indicator Styles
+ */
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-icon {
+  display: inline-block;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.status-text {
+  line-height: 1;
+}
+
+/* Status-specific styles */
+.status-idle {
+  color: #6b7280;
+}
+
+.status-recording .status-icon {
+  color: #ef4444;
+  animation: pulse-recording 1.5s ease-in-out infinite;
+}
+
+.status-listening .status-icon {
+  color: #3b82f6;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-transcribing .status-icon {
+  color: #8b5cf6;
+  animation: spin 1s linear infinite;
+}
+
+.status-thinking .status-icon {
+  color: #10b981;
+  animation: pulse-dots 1.5s ease-in-out infinite;
+}
+
+.status-speaking .status-icon {
+  color: #f59e0b;
+  animation: wave 1s ease-in-out infinite;
+}
+
+.status-error {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-recording {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-dots {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-2px);
+  }
+  75% {
+    transform: translateY(2px);
+  }
+}

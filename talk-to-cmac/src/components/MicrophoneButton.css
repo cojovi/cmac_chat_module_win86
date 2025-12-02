@@ -1,0 +1,126 @@
+/**
+ * Microphone Button Styles
+ */
+
+.microphone-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  min-height: 140px;
+}
+
+.microphone-button:hover:not(.disabled):not(.processing) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.microphone-button:active:not(.disabled):not(.processing) {
+  transform: scale(0.98);
+}
+
+.microphone-button.recording {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.microphone-button.processing {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.microphone-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mic-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-icon {
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.microphone-button.recording .mic-icon {
+  color: #ef4444;
+}
+
+.button-text {
+  position: absolute;
+  bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+.microphone-button.recording .button-text {
+  color: #ef4444;
+}
+
+/* Recording rings animation */
+.recording-rings {
+  position: absolute;
+  inset: -1rem;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  border-radius: 50%;
+  animation: ring-pulse 2s ease-out infinite;
+}
+
+.ring-1 {
+  animation-delay: 0s;
+}
+
+.ring-2 {
+  animation-delay: 0.4s;
+}
+
+.ring-3 {
+  animation-delay: 0.8s;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(239, 68, 68, 0.3);
+  }
+}
+
+@keyframes ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

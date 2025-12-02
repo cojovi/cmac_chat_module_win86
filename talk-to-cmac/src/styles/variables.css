@@ -1,0 +1,272 @@
+/**
+ * Talk to CMAC - CSS Variables
+ * Design System v1.0
+ *
+ * Global design tokens for the entire application.
+ * These variables support automatic light/dark mode switching.
+ */
+
+:root {
+  /* ============================================
+     PRIMARY BRAND COLORS (CMAC Roofing)
+     ============================================ */
+  --cmac-primary: #1E3A8A;
+  --cmac-primary-light: #3B82F6;
+  --cmac-primary-dark: #1E293B;
+
+  --cmac-secondary: #DC2626;
+  --cmac-secondary-light: #F87171;
+  --cmac-secondary-dark: #991B1B;
+
+  /* ============================================
+     NEUTRAL PALETTE
+     ============================================ */
+  --cmac-gray-50: #F8FAFC;
+  --cmac-gray-100: #F1F5F9;
+  --cmac-gray-200: #E2E8F0;
+  --cmac-gray-300: #CBD5E1;
+  --cmac-gray-400: #94A3B8;
+  --cmac-gray-500: #64748B;
+  --cmac-gray-600: #475569;
+  --cmac-gray-700: #334155;
+  --cmac-gray-800: #1E293B;
+  --cmac-gray-900: #0F172A;
+
+  /* ============================================
+     STATE-SPECIFIC COLORS
+     ============================================ */
+  --state-listening: #3B82F6;
+  --state-listening-glow: rgba(59, 130, 246, 0.4);
+
+  --state-transcribing: #F59E0B;
+  --state-transcribing-glow: rgba(245, 158, 11, 0.4);
+
+  --state-thinking: #8B5CF6;
+  --state-thinking-glow: rgba(139, 92, 246, 0.4);
+
+  --state-speaking: #10B981;
+  --state-speaking-glow: rgba(16, 185, 129, 0.4);
+
+  --state-error: #DC2626;
+  --state-error-glow: rgba(220, 38, 38, 0.4);
+
+  --state-offline: #64748B;
+  --state-offline-glow: rgba(100, 116, 139, 0.4);
+
+  /* ============================================
+     GLASSMORPHISM
+     ============================================ */
+  --glass-white: rgba(255, 255, 255, 0.85);
+  --glass-dark: rgba(30, 41, 59, 0.85);
+  --glass-blur: 20px;
+
+  /* ============================================
+     LIGHT MODE (DEFAULT)
+     ============================================ */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --border-color: #E2E8F0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --glass-bg: var(--glass-white);
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  --font-primary: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+
+  /* ============================================
+     SPACING & LAYOUT
+     ============================================ */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ============================================
+     SHADOWS
+     ============================================ */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-slower: 500ms ease;
+
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+[data-theme="dark"] {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --glass-bg: var(--glass-dark);
+}
+
+/* Auto dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --glass-bg: var(--glass-dark);
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible outline */
+*:focus-visible {
+  outline: 3px solid var(--cmac-primary-light);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline-width: 4px;
+    outline-offset: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   SCROLLBAR STYLING (WEBKIT)
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cmac-gray-400);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cmac-gray-500);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--cmac-gray-600);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--cmac-gray-500);
+}
