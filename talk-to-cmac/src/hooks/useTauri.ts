@@ -21,6 +21,15 @@ export function useTauri() {
   useEffect(() => {
     const initialize = async () => {
       try {
+        // Check if Tauri is available
+        if (typeof window === 'undefined' || !('__TAURI__' in window)) {
+          console.warn('Tauri API not available - running in browser mode');
+          return;
+        }
+
+        // Wait a bit for Tauri to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
         // Load configuration
         const config = await tauri.loadConfig();
         setConfig(config);

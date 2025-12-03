@@ -1,0 +1,260 @@
+(base) cojovi@CojoMacPro talk-to-cmac % npm run tauri dev
+
+> talk-to-cmac@0.1.0 tauri
+> tauri dev
+
+     Running BeforeDevCommand (`npm run dev`)
+
+> talk-to-cmac@0.1.0 dev
+> vite
+
+
+  VITE v7.2.6  ready in 173 ms
+
+  ➜  Local:   http://localhost:1420/
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+        Info Watching /Users/cojovi/dev/windows_gpt/talk-to-cmac/src-tauri for changes...
+   Compiling talk-to-cmac v0.1.0 (/Users/cojovi/dev/windows_gpt/talk-to-cmac/src-tauri)
+   Compiling dotenvy v0.15.7
+warning: unused import: `crate::error::AppResult`
+ --> src/commands.rs:8:5
+  |
+8 | use crate::error::AppResult;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `error_type` is never read
+  --> src/api/whisper.rs:39:5
+   |
+36 | struct WhisperErrorDetail {
+   |        ------------------ field in this struct
+...
+39 |     error_type: Option<String>,
+   |     ^^^^^^^^^^
+   |
+   = note: `WhisperErrorDetail` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `update_config` and `update_api_key` are never used
+   --> src/api/whisper.rs:201:12
+    |
+ 42 | impl WhisperClient {
+    | ------------------ methods in this implementation
+...
+201 |     pub fn update_config(&mut self, config: WhisperConfig) {
+    |            ^^^^^^^^^^^^^
+...
+206 |     pub fn update_api_key(&mut self, api_key: Option<String>) {
+    |            ^^^^^^^^^^^^^^
+
+warning: fields `id` and `model` are never read
+  --> src/api/openwebui.rs:41:9
+   |
+40 | pub struct ChatCompletionResponse {
+   |            ---------------------- fields in this struct
+41 |     pub id: Option<String>,
+   |         ^^
+42 |     pub model: Option<String>,
+   |         ^^^^^
+   |
+   = note: `ChatCompletionResponse` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `index` and `finish_reason` are never read
+  --> src/api/openwebui.rs:50:9
+   |
+49 | pub struct ChatChoice {
+   |            ---------- fields in this struct
+50 |     pub index: usize,
+   |         ^^^^^
+51 |     pub message: ChatMessage,
+52 |     pub finish_reason: Option<String>,
+   |         ^^^^^^^^^^^^^
+   |
+   = note: `ChatChoice` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: field `error_type` is never read
+  --> src/api/openwebui.rs:73:5
+   |
+70 | struct OpenWebUiErrorDetail {
+   |        -------------------- field in this struct
+...
+73 |     error_type: Option<String>,
+   |     ^^^^^^^^^^
+   |
+   = note: `OpenWebUiErrorDetail` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: methods `update_config`, `update_api_key`, `get_model`, and `set_model` are never used
+   --> src/api/openwebui.rs:261:12
+    |
+ 76 | impl OpenWebUiClient {
+    | -------------------- methods in this implementation
+...
+261 |     pub fn update_config(&mut self, config: OpenWebUiConfig) {
+    |            ^^^^^^^^^^^^^
+...
+266 |     pub fn update_api_key(&mut self, api_key: Option<String>) {
+    |            ^^^^^^^^^^^^^^
+...
+271 |     pub fn get_model(&self) -> &str {
+    |            ^^^^^^^^^
+...
+276 |     pub fn set_model(&mut self, model: String) {
+    |            ^^^^^^^^^
+
+warning: methods `update_config`, `update_api_key`, `get_voice_id`, `set_voice_id`, and `update_voice_settings` are never used
+   --> src/api/elevenlabs.rs:266:12
+    |
+ 65 | impl ElevenLabsClient {
+    | --------------------- methods in this implementation
+...
+266 |     pub fn update_config(&mut self, config: ElevenLabsConfig) {
+    |            ^^^^^^^^^^^^^
+...
+271 |     pub fn update_api_key(&mut self, api_key: Option<String>) {
+    |            ^^^^^^^^^^^^^^
+...
+276 |     pub fn get_voice_id(&self) -> &str {
+    |            ^^^^^^^^^^^^
+...
+281 |     pub fn set_voice_id(&mut self, voice_id: String) {
+    |            ^^^^^^^^^^^^
+...
+286 |     pub fn update_voice_settings(&mut self, settings: VoiceSettings) {
+    |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `delete_api_key` is never used
+   --> src/config.rs:351:12
+    |
+224 | impl ConfigManager {
+    | ------------------ method in this implementation
+...
+351 |     pub fn delete_api_key(&self, service: &str) -> AppResult<()> {
+    |            ^^^^^^^^^^^^^^
+
+warning: variants `State` and `Generic` are never constructed
+  --> src/error.rs:37:5
+   |
+10 | pub enum AppError {
+   |          -------- variants in this enum
+...
+37 |     State(String),
+   |     ^^^^^
+...
+41 |     Generic(String),
+   |     ^^^^^^^
+   |
+   = note: `AppError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variant `InvalidAudioFormat` is never constructed
+  --> src/error.rs:51:5
+   |
+46 | pub enum WhisperError {
+   |          ------------ variant in this enum
+...
+51 |     InvalidAudioFormat,
+   |     ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `WhisperError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variant `InvalidVoiceSettings` is never constructed
+   --> src/error.rs:107:5
+    |
+ 99 | pub enum ElevenLabsError {
+    |          --------------- variant in this enum
+...
+107 |     InvalidVoiceSettings,
+    |     ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `ElevenLabsError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variants `NoConnection`, `DnsResolutionFailed`, and `TlsError` are never constructed
+   --> src/error.rs:135:5
+    |
+127 | pub enum NetworkError {
+    |          ------------ variants in this enum
+...
+135 |     NoConnection,
+    |     ^^^^^^^^^^^^
+...
+138 |     DnsResolutionFailed,
+    |     ^^^^^^^^^^^^^^^^^^^
+...
+141 |     TlsError(String),
+    |     ^^^^^^^^
+    |
+    = note: `NetworkError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variants `InvalidValue` and `FileNotFound` are never constructed
+   --> src/error.rs:163:5
+    |
+152 | pub enum ConfigError {
+    |          ----------- variants in this enum
+...
+163 |     InvalidValue(String),
+    |     ^^^^^^^^^^^^
+...
+169 |     FileNotFound,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `ConfigError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variants `WriteFailed`, `InvalidFormat`, `ConversionFailed`, `DeviceError`, `BufferOverflow`, and `BufferUnderflow` are never constructed
+   --> src/error.rs:182:5
+    |
+177 | pub enum AudioError {
+    |          ---------- variants in this enum
+...
+182 |     WriteFailed(String),
+    |     ^^^^^^^^^^^
+...
+185 |     InvalidFormat(String),
+    |     ^^^^^^^^^^^^^
+...
+188 |     ConversionFailed(String),
+    |     ^^^^^^^^^^^^^^^^
+...
+191 |     DeviceError(String),
+    |     ^^^^^^^^^^^
+...
+194 |     BufferOverflow,
+    |     ^^^^^^^^^^^^^^
+...
+197 |     BufferUnderflow,
+    |     ^^^^^^^^^^^^^^^
+    |
+    = note: `AudioError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: methods `update_connectivity` and `all_services_connected` are never used
+   --> src/state.rs:260:12
+    |
+135 | impl AppState {
+    | ------------- methods in this implementation
+...
+260 |     pub fn update_connectivity(&self, connectivity: ConnectivityStatus) {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+284 |     pub fn all_services_connected(&self) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `talk-to-cmac` (lib) generated 16 warnings (run `cargo fix --lib -p talk-to-cmac` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.75s
+     Running `target/debug/talk-to-cmac`
+[2025-12-02T15:11:03Z INFO  talk_to_cmac_lib] Starting Talk to CMAC application
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Initializing application state
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib::config] Config file not found, using defaults
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib::config] ✓ Using whisper from environment variable: OPENAI_API_KEY
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib::config] ✓ Using openwebui from environment variable: OPENWEBUI_API_KEY
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib::config] ✓ Using elevenlabs from environment variable: ELEVENLABS_API_KEY
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Configuration loaded
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Setting up system tray
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] System tray initialized
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Registering global hotkey: CommandOrControl+Shift+Space
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Main window configured
+[2025-12-02T15:11:04Z INFO  talk_to_cmac_lib] Application setup complete
+[2025-12-02T15:11:05Z INFO  talk_to_cmac_lib::commands] Loading configuration
+[2025-12-02T15:11:05Z INFO  talk_to_cmac_lib::commands] Loading configuration
+[2025-12-02T15:11:05Z INFO  talk_to_cmac_lib::commands] Checking connectivity to all services
+[2025-12-02T15:11:05Z INFO  talk_to_cmac_lib::commands] Checking connectivity to all services
+[2025-12-02T15:11:06Z INFO  talk_to_cmac_lib::commands] Connectivity check complete
+[2025-12-02T15:11:06Z INFO  talk_to_cmac_lib::commands] Connectivity check complete

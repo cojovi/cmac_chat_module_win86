@@ -158,15 +158,21 @@ impl Default for AppConfig {
     fn default() -> Self {
         Self {
             whisper: WhisperConfig {
-                endpoint: "https://api.openai.com/v1/audio/transcriptions".to_string(),
-                model: "whisper-1".to_string(),
+                endpoint: std::env::var("WHISPER_BASE_URL")
+                    .map(|url| format!("{}/audio/transcriptions", url))
+                    .unwrap_or_else(|_| "https://api.openai.com/v1/audio/transcriptions".to_string()),
+                model: std::env::var("WHISPER_MODEL")
+                    .unwrap_or_else(|_| "whisper-1".to_string()),
                 language: Some("en".to_string()),
                 temperature: 0.0,
                 timeout_secs: 30,
             },
             openwebui: OpenWebUiConfig {
-                endpoint: "http://localhost:3000/api/chat".to_string(),
-                model: "llama3.2".to_string(),
+                endpoint: std::env::var("OPENWEBUI_BASE_URL")
+                    .map(|url| format!("{}/api/chat", url))
+                    .unwrap_or_else(|_| "http://localhost:3000/api/chat".to_string()),
+                model: std::env::var("OPENWEBUI_MODEL_NAME")
+                    .unwrap_or_else(|_| "llama3.2".to_string()),
                 max_context_length: 4096,
                 temperature: 0.7,
                 max_tokens: Some(1024),
@@ -174,8 +180,11 @@ impl Default for AppConfig {
                 timeout_secs: 60,
             },
             elevenlabs: ElevenLabsConfig {
-                endpoint: "https://api.elevenlabs.io/v1/text-to-speech".to_string(),
-                voice_id: "21m00Tcm4TlvDq8ikWAM".to_string(), // Default voice
+                endpoint: std::env::var("ELEVENLABS_BASE_URL")
+                    .map(|url| format!("{}/text-to-speech", url))
+                    .unwrap_or_else(|_| "https://api.elevenlabs.io/v1/text-to-speech".to_string()),
+                voice_id: std::env::var("ELEVENLABS_VOICE_ID")
+                    .unwrap_or_else(|_| "21m00Tcm4TlvDq8ikWAM".to_string()), // Default voice
                 model_id: "eleven_monolingual_v1".to_string(),
                 voice_settings: VoiceSettings {
                     stability: 0.5,
@@ -292,19 +301,50 @@ impl ConfigManager {
 
     /// Retrieve API key from system keyring
     pub fn get_api_key(&self, service: &str) -> AppResult<String> {
-        // First try environment variable
-        let env_var = format!("{}_API_KEY", service.to_uppercase());
-        if let Ok(key) = std::env::var(&env_var) {
-            log::debug!("Using API key from environment variable: {}", env_var);
-            return Ok(key);
+        // PRIORITY 1: Check standard environment variables (from .env file or system)
+        let env_var_name = format!("{}_API_KEY", service.to_uppercase().replace('-', "_"));
+        if let Ok(key) = std::env::var(&env_var_name) {
+            if !key.is_empty() && key != "your-openai-api-key-here" && key != "your-openwebui-api-key-here" && key != "your-elevenlabs-api-key-here" {
+                log::info!("✓ Using {} from environment variable: {}", service, env_var_name);
+                return Ok(key);
+            }
         }
 
-        // Then try keyring
+        // PRIORITY 2: Check alternative environment variable names
+        let alt_names = match service {
+            "whisper" => vec!["OPENAI_API_KEY"],
+            "openwebui" => vec!["OPENWEBUI_API_KEY"],
+            "elevenlabs" => vec!["ELEVENLABS_API_KEY"],
+            _ => vec![],
+        };
+
+        for alt_name in alt_names {
+            if let Ok(key) = std::env::var(alt_name) {
+                if !key.is_empty() && !key.contains("your-") && !key.contains("-api-key-here") {
+                    log::info!("✓ Using {} from environment variable: {}", service, alt_name);
+                    return Ok(key);
+                }
+            }
+        }
+
+        // PRIORITY 3: Try keyring
         let entry = Entry::new(&self.keyring_service, service)
             .map_err(|e| ConfigError::KeyringError(e.to_string()))?;
 
-        entry.get_password()
-            .map_err(|e| AppError::Config(ConfigError::MissingConfig(format!("API key not found for {}: {}", service, e))))
+        match entry.get_password() {
+            Ok(key) => {
+                log::info!("✓ Using {} from system keyring", service);
+                Ok(key)
+            }
+            Err(e) => {
+                log::error!("✗ No API key found for {} (tried env vars and keyring): {}", service, e);
+                Err(AppError::Config(ConfigError::MissingConfig(format!(
+                    "API key not found for '{}'. Set {} environment variable or store via app settings.",
+                    service,
+                    env_var_name
+                ))))
+            }
+        }
     }
 
     /// Delete API key from system keyring

@@ -17,6 +17,13 @@ use tauri::Manager;
 /// Initialize and run the Tauri application
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Load .env file (will load from project root or parent directories)
+    // This allows us to use environment variables for API keys during development
+    match dotenvy::dotenv() {
+        Ok(path) => log::info!("Loaded .env file from: {:?}", path),
+        Err(e) => log::warn!("No .env file found or error loading it: {} (this is OK if using system keyring)", e),
+    }
+
     // Initialize logger
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
 

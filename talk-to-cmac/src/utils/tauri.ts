@@ -5,6 +5,23 @@
  */
 
 import { invoke } from '@tauri-apps/api/core';
+
+/**
+ * Check if running in Tauri context
+ */
+function isTauriContext(): boolean {
+  return typeof window !== 'undefined' && '__TAURI__' in window;
+}
+
+/**
+ * Safe invoke wrapper that checks Tauri context first
+ */
+async function safeInvoke<T>(command: string, args?: Record<string, unknown>): Promise<T> {
+  if (!isTauriContext()) {
+    throw new Error('Tauri API not available. Are you running in development mode without Tauri?');
+  }
+  return invoke<T>(command, args);
+}
 import type {
   AppConfig,
   AppStateResponse,
@@ -28,7 +45,7 @@ export async function processAudio(
   filename: string = 'recording.wav'
 ): Promise<string> {
   try {
-    return await invoke<string>('process_audio', {
+    return await safeInvoke<string>('process_audio', {
       audioData: Array.from(audioData),
       filename,
     });
@@ -46,7 +63,7 @@ export async function synthesizeSpeech(text: string): Promise<Uint8Array> {
       throw new Error('Text exceeds maximum length of 5000 characters');
     }
 
-    const audioBytes = await invoke<number[]>('synthesize_speech', { text });
+    const audioBytes = await safeInvoke<number[]>('synthesize_speech', { text });
     return new Uint8Array(audioBytes);
   } catch (error) {
     throw new Error(`Speech synthesis failed: ${error}`);
@@ -62,7 +79,7 @@ export async function synthesizeSpeech(text: string): Promise<Uint8Array> {
  */
 export async function sendMessage(message: string): Promise<string> {
   try {
-    return await invoke<string>('send_message', { message });
+    return await safeInvoke<string>('send_message', { message });
   } catch (error) {
     throw new Error(`Failed to send message: ${error}`);
   }
@@ -80,7 +97,7 @@ export async function processVoiceQuery(
   filename: string = 'recording.wav'
 ): Promise<VoiceQueryResponse> {
   try {
-    return await invoke<VoiceQueryResponse>('process_voice_query', {
+    return await safeInvoke<VoiceQueryResponse>('process_voice_query', {
       audioData: Array.from(audioData),
       filename,
     });
@@ -98,7 +115,7 @@ export async function processVoiceQuery(
  */
 export async function loadConfig(): Promise<AppConfig> {
   try {
-    return await invoke<AppConfig>('load_config');
+    return await safeInvoke<AppConfig>('load_config');
   } catch (error) {
     throw new Error(`Failed to load configuration: ${error}`);
   }
@@ -138,7 +155,7 @@ export async function updateApiKey(
  */
 export async function getAppState(): Promise<AppStateResponse> {
   try {
-    return await invoke<AppStateResponse>('get_app_state');
+    return await safeInvoke<AppStateResponse>('get_app_state');
   } catch (error) {
     throw new Error(`Failed to get app state: ${error}`);
   }
@@ -149,7 +166,7 @@ export async function getAppState(): Promise<AppStateResponse> {
  */
 export async function getConversation(): Promise<ConversationContext> {
   try {
-    return await invoke<ConversationContext>('get_conversation');
+    return await safeInvoke<ConversationContext>('get_conversation');
   } catch (error) {
     throw new Error(`Failed to get conversation: ${error}`);
   }
@@ -175,7 +192,7 @@ export async function clearConversation(): Promise<void> {
  */
 export async function checkConnectivity(): Promise<ConnectivityResponse> {
   try {
-    return await invoke<ConnectivityResponse>('check_connectivity');
+    return await safeInvoke<ConnectivityResponse>('check_connectivity');
   } catch (error) {
     throw new Error(`Failed to check connectivity: ${error}`);
   }
@@ -190,7 +207,7 @@ export async function checkConnectivity(): Promise<ConnectivityResponse> {
  */
 export async function listVoices(): Promise<Voice[]> {
   try {
-    return await invoke<Voice[]>('list_voices');
+    return await safeInvoke<Voice[]>('list_voices');
   } catch (error) {
     throw new Error(`Failed to list voices: ${error}`);
   }
